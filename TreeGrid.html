@@ -33,9 +33,6 @@
   <body>
     <table id="table"></table>
 
-	
-   
-
 <script>
   var $table = $('#table');
 var dataval=[
@@ -105,7 +102,7 @@ var dataval=[
 ];
   $(function() {
     $table.bootstrapTable({
-       data:dataval,
+       url:/json/treegrid.json,
       striped: true,
      
       idField: 'id',

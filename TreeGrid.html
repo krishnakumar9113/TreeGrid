@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Hello, Bootstrap Table!</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.5.1/hint.min.css">
+	
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-treegrid/0.2.0/css/jquery.treegrid.min.css" rel="stylesheet">
+	  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">
+	  
+	    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/1.1.2/sprintf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-treegrid/0.2.0/js/jquery.treegrid.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+
+<script src="https://unpkg.com/bootstrap-table@1.15.4/dist/extensions/treegrid/bootstrap-table-treegrid.min.js"></script>
+ 
+  
+
+
+	
+  </head>
+  <body>
+    <table id="table"></table>
+
+	
+   
+
+<script>
+  var $table = $('#table');
+var dataval=[
+    {
+      "id": 1,
+      "pid": 0,
+      "status": 1,
+      "name": "gffg",
+      "permissionValue": "open:system:get"
+    },
+    {
+      "id": 2,
+      "pid": 0,
+      "status": 1,
+      "name": "fg",
+      "permissionValue": "open:dict:get"
+    },
+    {
+      "id": 20,
+      "pid": 1,
+      "status": 1,
+      "name": "fg",
+      "permissionValue": "open:system:add"
+    },
+    {
+      "id": 21,
+      "pid": 1,
+      "status": 1,
+      "name": "fg",
+      "permissionValue": "open:system:edit"
+    },
+    {
+      "id": 22,
+      "pid": 1,
+      "status": 1,
+      "name": "fg",
+      "permissionValue": "open:system:delete"
+    },
+    {
+      "id": 33,
+      "pid": 2,
+      "status": 1,
+      "name": "ff",
+      "permissionValue": "open:env:get"
+    },
+    {
+      "id": 333,
+      "pid": 33,
+      "status": 1,
+      "name": "sdf",
+      "permissionValue": "open:env:add"
+    },
+    {
+      "id": 3333,
+      "pid": 33,
+      "status": 1,
+      "name": "sdfg",
+      "permissionValue": "open:env:edit"
+    },
+    {
+      "id": 233332,
+      "pid": 33,
+      "status": 0,
+      "name": "ad",
+      "permissionValue": "open:env:delete"
+    }
+];
+  $(function() {
+    $table.bootstrapTable({
+       data:dataval,
+      striped: true,
+     
+      idField: 'id',
+      showColumns: true,
+      columns: [
+       {
+          field: 'id',
+          title: 'id'
+        },
+        {
+          field: 'name',
+          title: 'name'
+        },
+        {
+          field: 'status',
+          title: 'Status'
+        
+        },
+        {
+          field: 'permissionValue',
+          title: 'permissionValue'
+        }
+      ],
+      treeShowField: 'name',
+      parentIdField: 'pid',
+      onPostBody: function() {
+        var columns = $table.bootstrapTable('getOptions').columns
+
+        if (columns && columns[0][1].visible) {
+          $table.treegrid({
+            treeColumn: 1,
+            onChange: function() {
+              $table.bootstrapTable('resetWidth')
+            }
+          })
+        }
+      }
+    })
+  })
+
+  function typeFormatter(value, row, index) {
+    if (value === 'menu') {
+      return 'mne'
+    }
+    if (value === 'button') {
+      return 'button'
+    }
+    if (value === 'api') {
+      return 'apid'
+    }
+    return '-'
+  }
+
+  function statusFormatter(value, row, index) {
+    if (value === 1) {
+      return '<span class="label label-success">??</span>'
+    }
+    return '<span class="label label-default">??</span>'
+  }
+</script>
+</body>
+</html>
